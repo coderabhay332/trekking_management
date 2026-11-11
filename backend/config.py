@@ -4,6 +4,23 @@ from datetime import timedelta
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
+def load_env_file(path):
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as handle:
+        for line in handle:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            value = value.strip().strip('"').strip("'")
+            if value:
+                os.environ.setdefault(key.strip(), value)
+
+
+load_env_file(os.path.join(os.path.dirname(BASE_DIR), ".env"))
+
+
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "tma-dev-secret-key-change-me-0123456789")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "tma-dev-jwt-secret-key-change-me-0123456789")

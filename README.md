@@ -32,6 +32,8 @@ The app is served at http://localhost:5000. The database (`backend/tma.db`) and 
 Default admin: `admin@tma.com` / `Admin@123` (override with `ADMIN_EMAIL`, `ADMIN_PASSWORD`).
 
 ## Configuration (environment variables)
+Copy `.env.example` to `.env` to override any value (loaded automatically, git-ignored).
+
 | Variable | Default |
 |---|---|
 | `REDIS_URL` | `redis://localhost:6379/0` |

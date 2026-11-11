@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+instance/
+*.db
+*.sqlite3
+.env
+dump.rdb
+celerybeat-schedule*
+exports/
+reports/output/
+node_modules/
+.idea/
+.vscode/

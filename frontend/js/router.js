@@ -1,4 +1,5 @@
 import { state, homeFor } from "./store.js";
+import Landing from "./views/Landing.js";
 import Login from "./views/Login.js";
 import Register from "./views/Register.js";
 import Profile from "./views/Profile.js";
@@ -16,7 +17,7 @@ import UserBookings from "./views/user/UserBookings.js";
 import UserHistory from "./views/user/UserHistory.js";
 
 const routes = [
-  { path: "/", redirect: () => (state.user ? homeFor(state.user.role) : "/login") },
+  { path: "/", component: Landing, meta: { guest: true } },
   { path: "/login", component: Login, meta: { guest: true } },
   { path: "/register", component: Register, meta: { guest: true } },
   { path: "/profile", component: Profile, meta: { roles: ["admin", "staff", "trekker"] } },

@@ -67,3 +67,40 @@ export function debounce(fn, wait = 300) {
     timer = setTimeout(() => fn(...args), wait);
   };
 }
+
+export const ChartCanvas = {
+  props: { type: String, labels: Array, values: Array, label: String, colors: Array },
+  template: `<div style="position:relative;height:260px"><canvas ref="el"></canvas></div>`,
+  setup(props) {
+    const el = Vue.ref(null);
+    let chart = null;
+    const palette = ["#2e7d32", "#0d6efd", "#ffc107", "#dc3545", "#6f42c1", "#20c997", "#fd7e14"];
+    const draw = () => {
+      if (chart) chart.destroy();
+      const circular = ["pie", "doughnut"].includes(props.type);
+      chart = new Chart(el.value, {
+        type: props.type,
+        data: {
+          labels: props.labels,
+          datasets: [{
+            label: props.label,
+            data: props.values,
+            backgroundColor: circular ? props.colors || palette : "#2e7d32",
+            borderColor: "#2e7d32",
+            tension: 0.3,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: circular } },
+          scales: circular ? {} : { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        },
+      });
+    };
+    Vue.onMounted(draw);
+    Vue.watch(() => [props.labels, props.values], draw);
+    Vue.onBeforeUnmount(() => chart && chart.destroy());
+    return { el };
+  },
+};

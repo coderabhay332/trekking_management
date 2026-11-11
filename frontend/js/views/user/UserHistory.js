@@ -10,7 +10,7 @@ export default {
     </div>
     <div class="table-responsive">
       <table class="table align-middle mb-0">
-        <thead><tr><th>Trek</th><th>Location</th><th>Dates</th><th>Booked on</th><th>Booking</th><th>Trek status</th></tr></thead>
+        <thead><tr><th>Trek</th><th>Location</th><th>Dates</th><th>Booked on</th><th>Booking</th><th>Trek status</th><th>Completed on</th></tr></thead>
         <tbody>
           <tr v-for="b in history" :key="b.id">
             <td>{{ b.trek_name }}</td><td>{{ b.location }}</td>
@@ -18,8 +18,9 @@ export default {
             <td class="small">{{ fmtDate(b.booking_date) }}</td>
             <td><status-badge :value="b.status"></status-badge></td>
             <td><status-badge :value="b.trek_status"></status-badge></td>
+            <td class="small">{{ b.completed_at ? fmtDate(b.completed_at) : '-' }}</td>
           </tr>
-          <tr v-if="!history.length"><td colspan="6" class="text-center text-muted py-4">No trekking history yet</td></tr>
+          <tr v-if="!history.length"><td colspan="7" class="text-center text-muted py-4">No trekking history yet</td></tr>
         </tbody>
       </table>
     </div>

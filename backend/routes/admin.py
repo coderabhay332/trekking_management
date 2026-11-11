@@ -71,6 +71,11 @@ def update_trek(trek_id):
             return error("Total slots cannot be lower than existing bookings")
         trek.available_slots = remaining
     status = clean.pop("status", None)
+    if status and status != trek.status:
+        if trek.status == "Completed":
+            return error("A completed trek cannot change status")
+        if status in ("Open", "Ongoing", "Completed") and not trek.staff_id:
+            return error("Assign a staff member before opening or running this trek")
     for key, value in clean.items():
         setattr(trek, key, value)
     if status and status != trek.status:
@@ -219,6 +224,16 @@ def list_bookings():
         query = query.filter(Booking.trek_id == int(request.args["trek_id"]))
     query = search_filter(query, Booking.id, [User.name, User.email, Trek.name], request.args.get("q"))
     return jsonify([b.to_dict() for b in query.order_by(Booking.booking_date.desc()).all()])
+
+
+@admin_bp.get("/users/<int:user_id>/history")
+@role_required(ROLE_ADMIN)
+def user_history(user_id):
+    user = db.session.get(User, user_id)
+    if not user:
+        return error("User not found", 404)
+    bookings = Booking.query.filter_by(user_id=user.id).order_by(Booking.booking_date.desc()).all()
+    return jsonify({"user": user.to_dict(), "history": [b.to_dict() for b in bookings]})
 
 
 @admin_bp.get("/reports")

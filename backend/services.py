@@ -71,7 +71,10 @@ def active_bookings_count(trek):
 
 def set_trek_status(trek, status):
     trek.status = status
+    if status == "Ongoing" and not trek.started_at:
+        trek.started_at = datetime.utcnow()
     if status == "Completed":
+        trek.completed_at = datetime.utcnow()
         for booking in trek.bookings:
             if booking.status == "Booked":
                 booking.status = "Completed"

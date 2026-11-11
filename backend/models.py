@@ -102,6 +102,8 @@ class Trek(db.Model):
     price = db.Column(db.Float, nullable=False, default=0)
     description = db.Column(db.Text)
     instructions = db.Column(db.Text)
+    started_at = db.Column(db.DateTime)
+    completed_at = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     staff = db.relationship("StaffProfile", back_populates="treks")
@@ -127,6 +129,8 @@ class Trek(db.Model):
             "price": self.price,
             "description": self.description,
             "instructions": self.instructions,
+            "started_at": self.started_at.isoformat() if self.started_at else None,
+            "completed_at": self.completed_at.isoformat() if self.completed_at else None,
             "booked_count": self.booked_count,
         }
         if with_staff:
@@ -162,6 +166,7 @@ class Booking(db.Model):
             "trek_status": self.trek.status,
             "start_date": self.trek.start_date.isoformat(),
             "end_date": self.trek.end_date.isoformat(),
+            "completed_at": self.trek.completed_at.isoformat() if self.trek.completed_at else None,
             "booking_date": self.booking_date.isoformat(),
             "status": self.status,
             "payment_status": self.payment_status,

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, jsonify, render_template
 from flask_cors import CORS
 
 from backend.config import Config
@@ -21,7 +21,23 @@ def create_app(config_class=Config):
     db.init_app(app)
     jwt.init_app(app)
 
+    from backend.auth import auth_bp
+
+    app.register_blueprint(auth_bp)
+
     init_db(app)
+
+    @jwt.unauthorized_loader
+    def missing_token(reason):
+        return jsonify({"error": "Authentication required"}), 401
+
+    @jwt.invalid_token_loader
+    def invalid_token(reason):
+        return jsonify({"error": "Invalid token"}), 401
+
+    @jwt.expired_token_loader
+    def expired_token(header, payload):
+        return jsonify({"error": "Session expired, please log in again"}), 401
 
     @app.route("/")
     def index():

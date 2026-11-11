@@ -1,0 +1,10 @@
+body { background: #f4f6f8; }
+.navbar-brand { font-weight: 700; letter-spacing: .3px; }
+.hero { background: linear-gradient(135deg, #1b5e20, #2e7d32 60%, #558b2f); color: #fff; }
+.stat-card { border: 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.stat-card .stat-value { font-size: 2rem; font-weight: 700; }
+.trek-card { border: 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); height: 100%; }
+.auth-card { max-width: 440px; margin: 48px auto; }
+.table-responsive { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.badge-status { font-size: .75rem; }
+.toast-wrap { position: fixed; top: 70px; right: 16px; z-index: 2000; }

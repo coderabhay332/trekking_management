@@ -2,7 +2,6 @@ import { state, homeFor } from "./store.js";
 import Login from "./views/Login.js";
 import Register from "./views/Register.js";
 import Profile from "./views/Profile.js";
-import Placeholder from "./views/Placeholder.js";
 import AdminDashboard from "./views/admin/AdminDashboard.js";
 import AdminTreks from "./views/admin/AdminTreks.js";
 import AdminStaff from "./views/admin/AdminStaff.js";
@@ -11,6 +10,10 @@ import AdminBookings from "./views/admin/AdminBookings.js";
 import AdminReports from "./views/admin/AdminReports.js";
 import StaffDashboard from "./views/staff/StaffDashboard.js";
 import StaffTreks from "./views/staff/StaffTreks.js";
+import UserDashboard from "./views/user/UserDashboard.js";
+import UserTreks from "./views/user/UserTreks.js";
+import UserBookings from "./views/user/UserBookings.js";
+import UserHistory from "./views/user/UserHistory.js";
 
 const routes = [
   { path: "/", redirect: () => (state.user ? homeFor(state.user.role) : "/login") },
@@ -25,7 +28,10 @@ const routes = [
   { path: "/admin/reports", component: AdminReports, meta: { roles: ["admin"] } },
   { path: "/staff", component: StaffDashboard, meta: { roles: ["staff"] } },
   { path: "/staff/treks", component: StaffTreks, meta: { roles: ["staff"] } },
-  { path: "/user", component: Placeholder, meta: { roles: ["trekker"] } },
+  { path: "/user", component: UserDashboard, meta: { roles: ["trekker"] } },
+  { path: "/user/treks", component: UserTreks, meta: { roles: ["trekker"] } },
+  { path: "/user/bookings", component: UserBookings, meta: { roles: ["trekker"] } },
+  { path: "/user/history", component: UserHistory, meta: { roles: ["trekker"] } },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 

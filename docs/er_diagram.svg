@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="600" viewBox="0 0 1100 600" font-family="Segoe UI, Arial, sans-serif">
+<rect width="1100" height="600" fill="#ffffff"/>
+<text x="550" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#1b5e20">Trekking Management Application V2 - ER Diagram</text>
+<rect x="40" y="50" width="270" height="272" rx="6" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+<path d="M40,82 L40,56 Q40,50 46,50 L304,50 Q310,50 310,56 L310,82 Z" fill="#2e7d32"/>
+<text x="175.0" y="71" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">users</text>
+<text x="52" y="98" font-size="13" fill="#222">id</text>
+<text x="298" y="98" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">PK</text>
+<rect x="41" y="106" width="268" height="24" fill="#f1f8e9"/>
+<text x="52" y="122" font-size="13" fill="#222">name</text>
+<text x="52" y="146" font-size="13" fill="#222">email</text>
+<text x="298" y="146" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">UK</text>
+<rect x="41" y="154" width="268" height="24" fill="#f1f8e9"/>
+<text x="52" y="170" font-size="13" fill="#222">password_hash</text>
+<text x="52" y="194" font-size="13" fill="#222">role</text>
+<rect x="41" y="202" width="268" height="24" fill="#f1f8e9"/>
+<text x="52" y="218" font-size="13" fill="#222">phone</text>
+<text x="52" y="242" font-size="13" fill="#222">address</text>
+<rect x="41" y="250" width="268" height="24" fill="#f1f8e9"/>
+<text x="52" y="266" font-size="13" fill="#222">is_active</text>
+<text x="52" y="290" font-size="13" fill="#222">is_blacklisted</text>
+<rect x="41" y="298" width="268" height="24" fill="#f1f8e9"/>
+<text x="52" y="314" font-size="13" fill="#222">created_at</text>
+<rect x="390" y="50" width="270" height="176" rx="6" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+<path d="M390,82 L390,56 Q390,50 396,50 L654,50 Q660,50 660,56 L660,82 Z" fill="#2e7d32"/>
+<text x="525.0" y="71" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">staff_profiles</text>
+<text x="402" y="98" font-size="13" fill="#222">id</text>
+<text x="648" y="98" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">PK</text>
+<rect x="391" y="106" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="122" font-size="13" fill="#222">user_id</text>
+<text x="648" y="122" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">FK, UK</text>
+<text x="402" y="146" font-size="13" fill="#222">contact</text>
+<rect x="391" y="154" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="170" font-size="13" fill="#222">specialization</text>
+<text x="402" y="194" font-size="13" fill="#222">experience_years</text>
+<rect x="391" y="202" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="218" font-size="13" fill="#222">status</text>
+<rect x="760" y="50" width="290" height="440" rx="6" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+<path d="M760,82 L760,56 Q760,50 766,50 L1044,50 Q1050,50 1050,56 L1050,82 Z" fill="#2e7d32"/>
+<text x="905.0" y="71" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">treks</text>
+<text x="772" y="98" font-size="13" fill="#222">id</text>
+<text x="1038" y="98" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">PK</text>
+<rect x="761" y="106" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="122" font-size="13" fill="#222">name</text>
+<text x="772" y="146" font-size="13" fill="#222">location</text>
+<rect x="761" y="154" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="170" font-size="13" fill="#222">difficulty</text>
+<text x="772" y="194" font-size="13" fill="#222">duration_days</text>
+<rect x="761" y="202" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="218" font-size="13" fill="#222">total_slots</text>
+<text x="772" y="242" font-size="13" fill="#222">available_slots</text>
+<rect x="761" y="250" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="266" font-size="13" fill="#222">staff_id</text>
+<text x="1038" y="266" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">FK</text>
+<text x="772" y="290" font-size="13" fill="#222">status</text>
+<rect x="761" y="298" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="314" font-size="13" fill="#222">start_date</text>
+<text x="772" y="338" font-size="13" fill="#222">end_date</text>
+<rect x="761" y="346" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="362" font-size="13" fill="#222">price</text>
+<text x="772" y="386" font-size="13" fill="#222">description</text>
+<rect x="761" y="394" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="410" font-size="13" fill="#222">instructions</text>
+<text x="772" y="434" font-size="13" fill="#222">started_at</text>
+<rect x="761" y="442" width="288" height="24" fill="#f1f8e9"/>
+<text x="772" y="458" font-size="13" fill="#222">completed_at</text>
+<text x="772" y="482" font-size="13" fill="#222">created_at</text>
+<rect x="390" y="340" width="270" height="224" rx="6" fill="#fff" stroke="#2e7d32" stroke-width="1.5"/>
+<path d="M390,372 L390,346 Q390,340 396,340 L654,340 Q660,340 660,346 L660,372 Z" fill="#2e7d32"/>
+<text x="525.0" y="361" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">bookings</text>
+<text x="402" y="388" font-size="13" fill="#222">id</text>
+<text x="648" y="388" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">PK</text>
+<rect x="391" y="396" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="412" font-size="13" fill="#222">user_id</text>
+<text x="648" y="412" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">FK</text>
+<text x="402" y="436" font-size="13" fill="#222">trek_id</text>
+<text x="648" y="436" text-anchor="end" font-size="12" font-weight="bold" fill="#c62828">FK</text>
+<rect x="391" y="444" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="460" font-size="13" fill="#222">booking_date</text>
+<text x="402" y="484" font-size="13" fill="#222">status</text>
+<rect x="391" y="492" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="508" font-size="13" fill="#222">payment_status</text>
+<text x="402" y="532" font-size="13" fill="#222">amount</text>
+<rect x="391" y="540" width="268" height="24" fill="#f1f8e9"/>
+<text x="402" y="556" font-size="13" fill="#222">cancelled_at</text>
+<path d="M310,94.0 L350,94.0 L350,118.0 L390,118.0" fill="none" stroke="#455a64" stroke-width="1.8"/>
+<text x="316" y="88.0" font-size="13" font-weight="bold" fill="#1565c0">1</text>
+<text x="362" y="112.0" font-size="13" font-weight="bold" fill="#1565c0">0..1</text>
+<text x="350" y="72.0" text-anchor="middle" font-size="11" font-style="italic" fill="#555">has</text>
+<path d="M660,94.0 L710,94.0 L710,262.0 L760,262.0" fill="none" stroke="#455a64" stroke-width="1.8"/>
+<text x="666" y="88.0" font-size="13" font-weight="bold" fill="#1565c0">1</text>
+<text x="740" y="256.0" font-size="13" font-weight="bold" fill="#1565c0">N</text>
+<text x="710" y="72.0" text-anchor="middle" font-size="11" font-style="italic" fill="#555">assigned to</text>
+<path d="M310,244.0 L350,244.0 L350,408.0 L390,408.0" fill="none" stroke="#455a64" stroke-width="1.8"/>
+<text x="316" y="238.0" font-size="13" font-weight="bold" fill="#1565c0">1</text>
+<text x="364" y="402.0" font-size="13" font-weight="bold" fill="#1565c0">N</text>
+<text x="350" y="262.0" text-anchor="middle" font-size="11" font-style="italic" fill="#555">makes</text>
+<path d="M660,432.0 L710,432.0 L710,424.0 L760,424.0" fill="none" stroke="#455a64" stroke-width="1.8"/>
+<text x="666" y="426.0" font-size="13" font-weight="bold" fill="#1565c0">N</text>
+<text x="742" y="418.0" font-size="13" font-weight="bold" fill="#1565c0">1</text>
+<text x="710" y="410.0" text-anchor="middle" font-size="11" font-style="italic" fill="#555">receives</text>
+<text x="40" y="585" font-size="12" fill="#555">PK primary key, FK foreign key, UK unique. Unique constraint on bookings (user_id, trek_id) prevents duplicate bookings.</text>
+</svg>

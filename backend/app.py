@@ -22,8 +22,10 @@ def create_app(config_class=Config):
     jwt.init_app(app)
 
     from backend.auth import auth_bp
+    from backend.routes.admin import admin_bp
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(admin_bp)
 
     init_db(app)
 

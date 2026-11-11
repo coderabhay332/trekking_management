@@ -1,11 +1,15 @@
 import { api } from "../../api.js";
+import { notify } from "../../store.js";
 import { StatCard } from "../../components/Common.js";
 
 export default {
   components: { StatCard },
   template: `
   <div class="container py-4">
-    <h4 class="mb-3">Trekking Statistics &amp; Reports</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="mb-0">Trekking Statistics &amp; Reports</h4>
+      <button class="btn btn-outline-success" @click="sendReport"><i class="bi bi-envelope"></i> Send monthly report now</button>
+    </div>
     <div v-if="r">
       <div class="row g-3 mb-4">
         <div class="col-6 col-lg-3"><stat-card label="Treks completed" :value="r.treks_completed" icon="bi-flag"></stat-card></div>
@@ -38,6 +42,10 @@ export default {
   setup() {
     const r = Vue.ref(null);
     Vue.onMounted(async () => { r.value = await api.get("/api/admin/reports"); });
-    return { r };
+    const sendReport = async () => {
+      try { await api.post("/api/admin/reports/monthly"); notify("Monthly report queued and will be emailed to you"); }
+      catch (e) { notify(e.message, "danger"); }
+    };
+    return { r, sendReport };
   },
 };

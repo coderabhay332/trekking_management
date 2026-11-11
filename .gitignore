@@ -7,7 +7,8 @@ instance/
 .env
 dump.rdb
 celerybeat-schedule*
-exports/
+backend/exports/
+backend/reports_output/
 reports/output/
 node_modules/
 .idea/

@@ -25,11 +25,13 @@ def create_app(config_class=Config):
     from backend.routes.admin import admin_bp
     from backend.routes.staff import staff_bp
     from backend.routes.trekker import trekker_bp
+    from backend.routes.jobs import jobs_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(staff_bp)
     app.register_blueprint(trekker_bp)
+    app.register_blueprint(jobs_bp)
 
     init_db(app)
 

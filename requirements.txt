@@ -5,3 +5,4 @@ Flask-Cors==6.0.5
 SQLAlchemy==2.1.8
 redis==8.1.0
 celery==5.7.0
+packaging==26.3

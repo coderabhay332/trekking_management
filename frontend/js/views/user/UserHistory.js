@@ -1,4 +1,5 @@
-import { api } from "../../api.js";
+import { api, download } from "../../api.js";
+import { notify } from "../../store.js";
 import { StatusBadge, fmtDate } from "../../components/Common.js";
 
 export default {
@@ -7,6 +8,10 @@ export default {
   <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="mb-0">Trekking History</h4>
+      <button class="btn btn-outline-success" :disabled="exporting" @click="exportCsv">
+        <span v-if="exporting" class="spinner-border spinner-border-sm"></span>
+        <i v-else class="bi bi-download"></i> {{ exporting ? "Preparing..." : "Export CSV" }}
+      </button>
     </div>
     <div class="table-responsive">
       <table class="table align-middle mb-0">
@@ -27,7 +32,30 @@ export default {
   </div>`,
   setup() {
     const history = Vue.ref([]);
+    const exporting = Vue.ref(false);
+
+    const exportCsv = async () => {
+      exporting.value = true;
+      try {
+        const { task_id } = await api.post("/api/user/export");
+        notify("Export started. We'll alert you when it's ready.", "info");
+        for (let i = 0; i < 60; i++) {
+          await new Promise((r) => setTimeout(r, 1000));
+          const status = await api.get(`/api/user/export/${task_id}`);
+          if (status.state === "SUCCESS") {
+            await download(`/api/user/export/${task_id}/download`, status.filename);
+            notify(`Export complete: ${status.records} record(s) downloaded`);
+            return;
+          }
+        }
+        notify("Export is taking longer than expected. Please try again.", "warning");
+      } catch (e) {
+        notify(e.message, "danger");
+      } finally {
+        exporting.value = false;
+      }
+    };
     Vue.onMounted(async () => { history.value = await api.get("/api/user/history"); });
-    return { history, fmtDate };
+    return { history, exporting, exportCsv, fmtDate };
   },
 };

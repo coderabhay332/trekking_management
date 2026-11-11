@@ -9,6 +9,8 @@ import AdminStaff from "./views/admin/AdminStaff.js";
 import AdminUsers from "./views/admin/AdminUsers.js";
 import AdminBookings from "./views/admin/AdminBookings.js";
 import AdminReports from "./views/admin/AdminReports.js";
+import StaffDashboard from "./views/staff/StaffDashboard.js";
+import StaffTreks from "./views/staff/StaffTreks.js";
 
 const routes = [
   { path: "/", redirect: () => (state.user ? homeFor(state.user.role) : "/login") },
@@ -21,7 +23,8 @@ const routes = [
   { path: "/admin/users", component: AdminUsers, meta: { roles: ["admin"] } },
   { path: "/admin/bookings", component: AdminBookings, meta: { roles: ["admin"] } },
   { path: "/admin/reports", component: AdminReports, meta: { roles: ["admin"] } },
-  { path: "/staff", component: Placeholder, meta: { roles: ["staff"] } },
+  { path: "/staff", component: StaffDashboard, meta: { roles: ["staff"] } },
+  { path: "/staff/treks", component: StaffTreks, meta: { roles: ["staff"] } },
   { path: "/user", component: Placeholder, meta: { roles: ["trekker"] } },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];

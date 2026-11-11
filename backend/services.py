@@ -78,6 +78,27 @@ def set_trek_status(trek, status):
     db.session.flush()
 
 
+STAFF_TRANSITIONS = {
+    "Approved": ("Open",),
+    "Open": ("Closed", "Ongoing"),
+    "Closed": ("Open", "Ongoing"),
+    "Ongoing": ("Completed",),
+    "Completed": (),
+    "Pending": (),
+}
+
+
+def cancel_booking(booking):
+    if booking.status != "Booked":
+        return False
+    booking.status = "Cancelled"
+    booking.cancelled_at = datetime.utcnow()
+    if booking.payment_status == "Paid":
+        booking.payment_status = "Refunded"
+    booking.trek.available_slots = min(booking.trek.total_slots, booking.trek.available_slots + 1)
+    return True
+
+
 def search_filter(query, model_id, text_columns, q):
     q = (q or "").strip()
     if not q:

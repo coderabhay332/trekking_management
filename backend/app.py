@@ -5,6 +5,7 @@ from flask_cors import CORS
 from backend.config import Config
 from backend.extensions import db, jwt
 from backend.seed import init_db
+from backend.cache import init_cache
 
 
 def create_app(config_class=Config):
@@ -34,6 +35,7 @@ def create_app(config_class=Config):
     app.register_blueprint(jobs_bp)
 
     init_db(app)
+    init_cache(app)
 
     @jwt.unauthorized_loader
     def missing_token(reason):

@@ -1,12 +1,13 @@
 from datetime import date, datetime
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, make_response
 from sqlalchemy import update
 
 from backend.extensions import db
 from backend.models import Trek, Booking, ROLE_TREKKER
 from backend.utils import error, role_required, current_user
 from backend.services import cancel_booking
+from backend.cache import cached
 
 trekker_bp = Blueprint("trekker", __name__, url_prefix="/api")
 
@@ -36,13 +37,13 @@ def filtered_treks(args):
 @role_required(ROLE_TREKKER)
 def list_treks():
     user = current_user()
+    key = "list:" + "&".join(f"{k}={v}" for k, v in sorted(request.args.items()) if v)
+    base, hit = cached("treks", key, lambda: [t.to_dict() for t in filtered_treks(request.args)])
     booked = {b.trek_id for b in Booking.query.filter_by(user_id=user.id, status="Booked")}
-    result = []
-    for trek in filtered_treks(request.args):
-        data = trek.to_dict()
-        data["already_booked"] = trek.id in booked
-        result.append(data)
-    return jsonify(result)
+    result = [{**item, "already_booked": item["id"] in booked} for item in base]
+    response = make_response(jsonify(result))
+    response.headers["X-Cache"] = "HIT" if hit else "MISS"
+    return response
 
 
 @trekker_bp.get("/treks/<int:trek_id>")
@@ -51,11 +52,13 @@ def trek_detail(trek_id):
     trek = db.session.get(Trek, trek_id)
     if not trek or trek.status not in VISIBLE_STATUSES + ("Closed", "Ongoing", "Completed"):
         return error("Trek not found", 404)
-    data = trek.to_dict()
+    data, hit = cached("treks", f"detail:{trek.id}", trek.to_dict)
     data["already_booked"] = (
         Booking.query.filter_by(user_id=current_user().id, trek_id=trek.id, status="Booked").first() is not None
     )
-    return jsonify(data)
+    response = make_response(jsonify(data))
+    response.headers["X-Cache"] = "HIT" if hit else "MISS"
+    return response
 
 
 @trekker_bp.post("/treks/<int:trek_id>/book")
@@ -141,7 +144,7 @@ def dashboard():
     active = [b for b in bookings if b.status == "Booked"]
     return jsonify(
         {
-            "available_treks": len(filtered_treks({})),
+            "available_treks": len(cached("treks", "list:", lambda: [t.to_dict() for t in filtered_treks({})])[0]),
             "booked_count": len(active),
             "completed_count": sum(1 for b in bookings if b.status == "Completed"),
             "cancelled_count": sum(1 for b in bookings if b.status == "Cancelled"),

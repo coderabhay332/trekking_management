@@ -8,6 +8,7 @@ from backend.models import Trek, Booking, ROLE_TREKKER
 from backend.utils import error, role_required, current_user
 from backend.services import cancel_booking
 from backend.cache import cached
+from backend.tasks import send_booking_notification
 
 trekker_bp = Blueprint("trekker", __name__, url_prefix="/api")
 
@@ -97,7 +98,15 @@ def book_trek(trek_id):
         booking = Booking(user_id=user.id, trek_id=trek.id, amount=trek.price)
         db.session.add(booking)
     db.session.commit()
+    notify_booking(booking, "booked")
     return jsonify({"message": "Trek booked successfully", "booking": booking.to_dict()}), 201
+
+
+def notify_booking(booking, kind):
+    try:
+        send_booking_notification.apply_async(args=(booking.id, kind), retry=False)
+    except Exception:
+        pass
 
 
 def own_booking(booking_id):
@@ -118,6 +127,7 @@ def cancel(booking_id):
     if not cancel_booking(booking):
         return error("Only active bookings can be cancelled")
     db.session.commit()
+    notify_booking(booking, "cancelled")
     return jsonify({"message": "Booking cancelled", "booking": booking.to_dict()})
 
 

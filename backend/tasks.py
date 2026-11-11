@@ -141,3 +141,17 @@ def export_booking_history(user_id):
         f"<p>Hi {user.name}, your export with {len(bookings)} record(s) is ready. Download it from your dashboard.</p>",
     )
     return {"user_id": user_id, "filename": filename, "records": len(bookings)}
+
+
+@celery.task(name="backend.tasks.send_booking_notification")
+def send_booking_notification(booking_id, kind):
+    booking = db.session.get(Booking, booking_id)
+    if not booking:
+        return False
+    trek = booking.trek
+    action = "confirmed" if kind == "booked" else "cancelled"
+    html = (
+        f"<h3>Booking {action}</h3><p>Hi {booking.user.name}, your booking for <strong>{trek.name}</strong> "
+        f"({trek.location}, {trek.start_date.strftime('%d %b %Y')} - {trek.end_date.strftime('%d %b %Y')}) has been {action}.</p>"
+    )
+    return send_email(booking.user.email, f"Booking {action}: {trek.name}", html)
